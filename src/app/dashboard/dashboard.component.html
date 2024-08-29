@@ -1,0 +1,25 @@
+<p-dataView #dv [value]="pokemons" [loading]="isLoading">
+  <ng-template pTemplate="list" let-items>
+    <div class="grid grid-nogutter">
+      <div class="col-4" *ngFor="let pokemon of items; let first = first" style="padding: 5px;">
+        <div class="card">
+          <div class="card-body">
+            <img [src]="pokemon.sprites.back_default" class="card-img-top" alt="{{pokemon.name}}">
+            <h5 class="card-title">{{pokemon.name}}</h5>
+            <p class="card-text">{{pokemon.description}}</p>
+            <a [routerLink]="['/pokemon', pokemon.id]" class="btn btn-primary">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
+<div class="flex flex-wrap justify-content-center gap-3">
+  <p>Total: {{metadata.count}} | Página: {{(metadata.offset / metadata.limit) + 1}}</p>
+</div>
+<div class="flex flex-wrap justify-content-center gap-3">
+  <p-button styleClass="border-round flex align-items-center justify-content-center mt-3"
+    (click)="fetchPokemons(metadata.previous)" *ngIf="!isLoading && metadata.previous" label="Previous" icon="pi pi-angle-left"></p-button>
+  <p-button styleClass="border-round flex align-items-center justify-content-center mt-3"
+    (click)="fetchPokemons(metadata.next)" *ngIf="!isLoading && metadata.next" label="Next" icon="pi pi-angle-right"></p-button>
+</div>
